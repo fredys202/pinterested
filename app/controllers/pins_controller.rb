@@ -9,19 +9,16 @@ class PinsController < ApplicationController
     @pins = Pin.all
   end
 
-
   def show
   end
-
 
   def new
     @pin = current_user.pins.build
   end
 
-
   def edit
   end
-
+    
 
   def create
     @pin = current_user.pins.build(pin_params)
@@ -32,7 +29,6 @@ class PinsController < ApplicationController
       end
   end
   
-
 
   def update
       if @pin.update(pin_params)
@@ -50,14 +46,12 @@ class PinsController < ApplicationController
   
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_pin
       @pin = Pin.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def pin_params
-      params.require(:pin).permit(:description)
+      params.require(:pin).permit(:description, :image)
     end
 
     def correct_user
