@@ -6,7 +6,7 @@ class PinsController < ApplicationController
 
 
   def index
-    @pins = Pin.all
+    @pins = Pin.all.order("created_at DESC").paginate(:page => params[:page],:per_page => 8)
   end
 
   def show
@@ -18,32 +18,32 @@ class PinsController < ApplicationController
 
   def edit
   end
-    
+
 
   def create
     @pin = current_user.pins.build(pin_params)
       if @pin.save
-        redirect_to @pin, notice: 'Pin was successfully created.' 
+        redirect_to @pin, notice: 'Pin was successfully created.'
       else
         render action: 'new'
       end
   end
-  
+
 
   def update
       if @pin.update(pin_params)
-        redirect_to @pin, notice: 'Pin was successfully updated.' 
+        redirect_to @pin, notice: 'Pin was successfully updated.'
       else
-       render action: 'edit' 
+       render action: 'edit'
       end
-    end
- 
+  end
+
 
   def destroy
     @pin.destroy
-      redirect_to pins_url, notice: 'Pin was successfully destroyed.' 
-    end
-  
+      redirect_to pins_url, notice: 'Pin was successfully destroyed.'
+  end
+
 
   private
     def set_pin
